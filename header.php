@@ -25,5 +25,3 @@
 This is the header template (header.php):<br />
 
 <?php wp_nav_menu(); ?>
-
-<hr />

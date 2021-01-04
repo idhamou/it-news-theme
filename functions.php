@@ -1,6 +1,4 @@
 <?php 
-
-
 /**
  * Enqueue scripts and styles.
  */
@@ -11,17 +9,12 @@ function it_news_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'it_news_scripts' );
 
-function it_news_widgets_init() {
-	register_sidebar(
-		array(
-			'name'          => esc_html__( 'Sidebar', 'it-news' ),
-			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'it-news' ),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
-			'after_title'   => '</h2>',
-		)
-	);
+function my_post_time_ago_function() {
+return sprintf( esc_html__( '%s ago', 'textdomain' ), human_time_diff(get_the_time ( 'U' ), current_time( 'timestamp' ) ) );
 }
-add_action( 'widgets_init', 'it_news_widgets_init' );
+add_filter( 'the_time', 'my_post_time_ago_function' );
+
+// include all PHP files in ./includes/ directory:
+foreach (glob(dirname(__FILE__) . '/includes/*.php') as $file) {
+    include $file;
+}
