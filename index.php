@@ -32,6 +32,26 @@ do_action( 'before_the_main_loop' ); ?>
 
 				<div class="grid-x grid-padding-x">
 					<!-- BLOCK LATEST NEWS -->
+					<div class="grid-x align-justify scrolling-wrapper-flexbox">
+						
+					<?php 
+					$options = array(
+			            'post_type' => array('post'),
+			            'posts_per_page' => '4' ,
+			            'post_status' => 'publish',
+			            // 'post__not_in' => $exclude_ids
+			        );
+					$exclude_ids = [];
+			        $theQuery = new WP_Query($options);
+			        if ($theQuery->have_posts()) {
+            			while ( $theQuery->have_posts() ) : $theQuery->the_post();
+            				// echo "<pre>";print_r($);die();
+            				$exclude_ids[] = get_the_ID();
+							get_template_part( 'template-parts/content-grid', get_post_format() );
+            			endwhile;
+            		}
+					?>
+					</div>
 					<div class="cell medium-7 large-8">
 
 						<div class="grid-x ListingTitle">
@@ -47,7 +67,11 @@ do_action( 'before_the_main_loop' ); ?>
 							$main_loop_i = 0;
 
 							while ( have_posts() ) : the_post();
-
+								// echo "<pre>";print_r($post);die('ppp');
+								if( in_array(get_the_ID(), $exclude_ids) ) { 
+									$main_loop_i++;
+									continue;
+								}
 								do_action( 'the_main_loop', $main_loop_i );
 
 								get_template_part( 'template-parts/content', get_post_format() );
