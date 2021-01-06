@@ -1,7 +1,7 @@
 <div class="grid-x posts">
 	<a href="<?php the_permalink(); ?>" class="cell" data-vr-excerpttitle="">
 		<picture>
-			<?php the_post_thumbnail('medium'); ?>
+			<?php the_post_thumbnail('listing'); ?>
 		</picture>
 	</a>
 	<div class="cell auto post-infos">
