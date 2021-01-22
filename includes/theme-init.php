@@ -3,7 +3,11 @@
  * Enqueue scripts and styles.
  */
 function it_news_scripts() {
-	wp_enqueue_style( 'it-news-style', get_template_directory_uri().'/assets/css/style.css', array() );
+	if (is_single()) {
+		wp_enqueue_style( 'it-news-style', get_template_directory_uri().'/assets/css/single-style.css', array() );
+	}elseif (is_home()) {
+		wp_enqueue_style( 'it-news-style', get_template_directory_uri().'/assets/css/style.css', array() );
+	}
 
 	
 }
